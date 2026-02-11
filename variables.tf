@@ -26,12 +26,12 @@ EOT
     resource_group_name     = string
     authorized_resource_ids = optional(set(string))
     description             = optional(string)
-    enabled                 = optional(bool, true)
+    enabled                 = optional(bool) # Default: true
     tags                    = optional(map(string))
     criteria = object({
       dimension = object({
         name     = string
-        operator = optional(string, "Include")
+        operator = optional(string) # Default: "Include"
         values   = list(string)
       })
       metric_name = string
