@@ -1,3 +1,7 @@
+output "monitor_scheduled_query_rules_logs_id" {
+  description = "Map of id values across all monitor_scheduled_query_rules_logs, keyed the same as var.monitor_scheduled_query_rules_logs"
+  value       = { for k, v in azurerm_monitor_scheduled_query_rules_log.monitor_scheduled_query_rules_logs : k => v.id }
+}
 output "monitor_scheduled_query_rules_logs_authorized_resource_ids" {
   description = "Map of authorized_resource_ids values across all monitor_scheduled_query_rules_logs, keyed the same as var.monitor_scheduled_query_rules_logs"
   value       = { for k, v in azurerm_monitor_scheduled_query_rules_log.monitor_scheduled_query_rules_logs : k => v.authorized_resource_ids }
