@@ -11,10 +11,13 @@ resource "azurerm_monitor_scheduled_query_rules_log" "monitor_scheduled_query_ru
   tags                    = each.value.tags
 
   criteria {
-    dimension {
-      name     = each.value.criteria.dimension.name
-      operator = each.value.criteria.dimension.operator
-      values   = each.value.criteria.dimension.values
+    dynamic "dimension" {
+      for_each = each.value.criteria.dimension
+      content {
+        name     = dimension.value.name
+        operator = dimension.value.operator
+        values   = dimension.value.values
+      }
     }
     metric_name = each.value.criteria.metric_name
   }
