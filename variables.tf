@@ -26,17 +26,25 @@ EOT
     resource_group_name     = string
     authorized_resource_ids = optional(set(string))
     description             = optional(string)
-    enabled                 = optional(bool) # Default: true
+    enabled                 = optional(bool)
     tags                    = optional(map(string))
     criteria = object({
       dimension = list(object({
         name     = string
-        operator = optional(string) # Default: "Include"
+        operator = optional(string)
         values   = list(string)
       }))
       metric_name = string
     })
   }))
+  validation {
+    condition = alltrue([
+      for k, v in var.monitor_scheduled_query_rules_logs : (
+        length(v.criteria.dimension) >= 1
+      )
+    ])
+    error_message = "Each dimension list must contain at least 1 items"
+  }
   # --- Unconfirmed validation candidates, derived from azurerm_monitor_scheduled_query_rules_log's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
