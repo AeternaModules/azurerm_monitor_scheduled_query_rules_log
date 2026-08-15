@@ -8,7 +8,7 @@ output "monitor_scheduled_query_rules_logs_authorized_resource_ids" {
 }
 output "monitor_scheduled_query_rules_logs_criteria" {
   description = "Map of criteria values across all monitor_scheduled_query_rules_logs, keyed the same as var.monitor_scheduled_query_rules_logs"
-  value       = { for k, v in azurerm_monitor_scheduled_query_rules_log.monitor_scheduled_query_rules_logs : k => v.criteria if v.criteria != null && length(v.criteria) > 0 }
+  value       = { for k, v in azurerm_monitor_scheduled_query_rules_log.monitor_scheduled_query_rules_logs : k => one(v.criteria) if v.criteria != null && length(v.criteria) > 0 }
 }
 output "monitor_scheduled_query_rules_logs_data_source_id" {
   description = "Map of data_source_id values across all monitor_scheduled_query_rules_logs, keyed the same as var.monitor_scheduled_query_rules_logs"
